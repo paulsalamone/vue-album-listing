@@ -1,28 +1,7 @@
 <script setup>
 import { ref, reactive } from "vue";
 
-// const newAlbum = reactive({
-//   artist: "x",
-//   title: "y",
-//   genre: "z",
-//   year: 0,
-// });
-
 const albums = ref([
-  {
-    artist: "Pavement",
-    title: "Slanted and Enchanted",
-    genre: "indie rock",
-    year: 1992,
-    cover: 0,
-  },
-  {
-    artist: "Pavement",
-    title: "Slanted and Enchanted",
-    genre: "indie rock",
-    year: 1992,
-    cover: 0,
-  },
   {
     artist: "Pavement",
     title: "Slanted and Enchanted",
@@ -35,24 +14,39 @@ const albums = ref([
 const artist = ref("");
 const title = ref("");
 const genre = ref("");
-const year = ref(1999);
+const year = ref();
 
 const show = ref(true);
 function toggleShow() {
   show.value = !show.value;
+}
+function handleSubmit(e) {
+  e.preventDefault();
+  const newAlbum = reactive({
+    artist: artist.value,
+    title: title.value,
+    genre: genre.value,
+    year: year.value,
+  });
+  albums.value.push(newAlbum);
+  artist.value = "";
+  title.value = "";
+  genre.value = "";
+  year.value = 0;
 }
 </script>
 
 <template>
   <h2>Create New Album: <button @click="toggleShow">hide</button></h2>
   <br />
-  <form v-if="show">
+  <form v-if="show" @submit="handleSubmit">
     <input v-model="artist" placeholder="artist" />
     <input v-model="title" placeholder="title" />
     <input v-model="genre" placeholder="genre" />
     <input v-model="year" placeholder="year" />
     <button type="submit">submit</button>
   </form>
+  <h2>Temp albums list:</h2>
   <div class="album-listing">
     <div :key="index" v-for="(album, index) in albums">
       <div class="album-cover">

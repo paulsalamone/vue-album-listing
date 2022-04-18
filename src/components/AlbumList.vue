@@ -3,5 +3,5 @@ import { ref, reactive } from "vue";
 </script>
 
 <template>
-  <h2>List O' Albums:</h2>
+  <h2>Componentised Album List:</h2>
 </template>
